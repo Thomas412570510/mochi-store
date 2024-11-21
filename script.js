@@ -1,5 +1,5 @@
-// 購物車商品數量和總金額
-let cart = JSON.parse(localStorage.getItem("cart")) || []; // 取得本地存儲的購物車
+// 取得本地存儲的購物車
+let cart = JSON.parse(localStorage.getItem("cart")) || []; 
 let totalPrice = 0;
 
 // 顯示購物車商品
@@ -7,6 +7,7 @@ function displayCartItems() {
     const cartItemsContainer = document.getElementById("cart-items");
     cartItemsContainer.innerHTML = ""; // 清空原有內容
 
+    // 顯示所有商品
     cart.forEach(item => {
         const itemElement = document.createElement("div");
         itemElement.classList.add("cart-item");
@@ -15,6 +16,7 @@ function displayCartItems() {
             <p>${item.name}</p>
             <p>價格: $${item.price}</p>
             <p>數量: ${item.quantity}</p>
+            <button class="remove-item" onclick="removeItem(${item.id})">移除</button>
         `;
         cartItemsContainer.appendChild(itemElement);
     });
@@ -32,11 +34,23 @@ function calculateTotalPrice() {
     document.getElementById("total-price").innerText = `總金額: $${totalPrice}`;
 }
 
+// 移除商品
+function removeItem(productId) {
+    cart = cart.filter(item => item.id !== productId);
+    localStorage.setItem("cart", JSON.stringify(cart)); // 更新本地存儲
+    displayCartItems(); // 重新顯示購物車
+}
+
 // 觸發結帳操作
 document.getElementById("checkout-button").addEventListener("click", function() {
+    if (cart.length === 0) {
+        alert("購物車為空，無法結帳！");
+        return;
+    }
     // 跳轉到付款頁面並傳遞總金額
     window.location.href = "payment.html?totalPrice=" + totalPrice;
 });
+
 // 取得 URL 參數
 function getUrlParams() {
     const params = new URLSearchParams(window.location.search);
@@ -68,10 +82,17 @@ document.getElementById("payment-form").addEventListener("submit", function(even
     window.location.href = "thankyou.html"; // 跳轉到完成頁面
 });
 
-// 初始化頁面
-displayTotalPrice();
+// 立即結帳按鈕事件 (從付款頁面過來)
+document.getElementById("checkout-payment-button").addEventListener("click", function() {
+    if (cart.length === 0) {
+        alert("購物車為空，無法結帳！");
+        return;
+    }
 
+    // 跳轉到付款頁面並傳遞總金額
+    window.location.href = "payment.html?totalPrice=" + totalPrice;
+});
 
 // 初始化頁面
 displayCartItems();
-
+displayTotalPrice();
