@@ -102,12 +102,13 @@ document.getElementById("payment-form")?.addEventListener("submit", function(eve
     const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
 
     // 顯示訂單確認訊息
-    alert(`訂單確認：\n姓名：${name}\n電話：${phone}\n門市：${store}\n付款方式：${paymentMethod}\n總金額：NT$${getUrlParams().totalPrice}`);
+    alert(`訂單確認：\n姓名：${name}\n電話：${phone}\n門市：${store}\n付款方式：${paymentMethod}\n總金額：$${getUrlParams().totalPrice}`);
 
     // 清空購物車並跳轉至完成頁面
     localStorage.removeItem("cart");
-    window.location.href = "thankyou.html"; // 跳轉到完成頁面
+    window.location.href = "thankyou.html"; // 跳轉到訂購成功頁面
 });
+
 
 // 初始化頁面
 displayCartItems();
