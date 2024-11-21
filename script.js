@@ -113,4 +113,5 @@ document.getElementById("payment-form")?.addEventListener("submit", function(eve
 displayCartItems();
 displayTotalPrice();
 
-
+localStorage.setItem("test", "test");
+console.log(localStorage.getItem("test"));
