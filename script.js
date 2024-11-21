@@ -1,7 +1,7 @@
 // 取得本地存儲的購物車
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-// 顯示購物車商品
+// 顯示購物車商品並加入修改數量功能
 function displayCartItems() {
     const cartItemsContainer = document.getElementById("cart-items");
     cartItemsContainer.innerHTML = ""; // 清空原有內容
@@ -13,18 +13,30 @@ function displayCartItems() {
             const itemElement = document.createElement("div");
             itemElement.classList.add("cart-item");
             itemElement.innerHTML = `
-                <img src="https://via.placeholder.com/50" alt="${item.name}" width="50">
+                <img src="${item.image}" alt="${item.name}" width="50">
                 <p>${item.name}</p>
                 <p>價格: NT$${item.price}</p>
-                <p>數量: ${item.quantity}</p>
+                <label>數量: </label>
+                <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
                 <button class="remove-item" onclick="removeItem(${item.id})">移除</button>
             `;
             cartItemsContainer.appendChild(itemElement);
         });
     }
 
-    calculateTotalPrice(); // 更新總金額
+    calculateTotalPrice();
 }
+
+// 更新數量
+function updateQuantity(productId, newQuantity) {
+    const item = cart.find(item => item.id === productId);
+    if (item) {
+        item.quantity = parseInt(newQuantity);
+        localStorage.setItem("cart", JSON.stringify(cart)); // 更新本地存儲
+        displayCartItems(); // 重新顯示購物車
+    }
+}
+
 
 // 計算總金額
 function calculateTotalPrice() {
