@@ -75,9 +75,14 @@ document.getElementById("products").addEventListener("click", function(event) {
             });
         }
 
-        localStorage.setItem("cart", JSON.stringify(cart)); // 更新本地存儲
-        displayCartItems(); // 重新顯示購物車
-    }
+       // 更新：移除購物車商品的函數
+function removeItem(productId) {
+    // 從購物車中移除指定商品
+    cart = cart.filter(item => item.id !== productId);
+    localStorage.setItem("cart", JSON.stringify(cart)); // 更新本地存儲
+    displayCartItems(); // 重新顯示購物車
+}
+
 });
 
 // 觸發結帳操作
