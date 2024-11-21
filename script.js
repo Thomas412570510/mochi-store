@@ -45,6 +45,7 @@ function calculateTotalPrice() {
     });
 
     document.getElementById("total-price").innerText = `總金額: NT$${totalPrice}`;
+    return totalPrice; // 返回總金額
 }
 
 // 移除商品
@@ -85,8 +86,10 @@ document.getElementById("checkout-button").addEventListener("click", function() 
         alert("購物車為空，無法結帳！");
         return;
     }
+    // 計算總金額
+    const totalPrice = calculateTotalPrice();
     // 跳轉到付款頁面並傳遞總金額
-    window.location.href = "payment.html?totalPrice=" + calculateTotalPrice();
+    window.location.href = "payment.html?totalPrice=" + totalPrice;
 });
 
 // 取得 URL 參數
@@ -113,7 +116,7 @@ document.getElementById("payment-form")?.addEventListener("submit", function(eve
     const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
 
     // 顯示訂單確認訊息
-    alert(`訂單確認：\n姓名：${name}\n電話：${phone}\n門市：${store}\n付款方式：${paymentMethod}\n總金額：$${getUrlParams().totalPrice}`);
+    alert(`訂單確認：\n姓名：${name}\n電話：${phone}\n門市：${store}\n付款方式：${paymentMethod}\n總金額：NT$${getUrlParams().totalPrice}`);
 
     // 清空購物車並跳轉至完成頁面
     localStorage.removeItem("cart");
@@ -123,4 +126,3 @@ document.getElementById("payment-form")?.addEventListener("submit", function(eve
 // 初始化頁面
 displayCartItems();
 displayTotalPrice();
-
