@@ -19,22 +19,6 @@
         </nav>
     </header>
 
-    
-    <!-- 購物車圖示 -->
-    <div id="cart-icon" onclick="toggleCart()">
-        <img src="https://via.placeholder.com/30/000000/FFFFFF/?text=🛒" alt="Cart">
-        <span id="cart-count">0</span> <!-- 顯示購物車內商品數量 -->
-    </div>
-
-    <!-- 購物車內容區域 -->
-    <div id="cart-container" class="cart-container">
-        <h3>購物車</h3>
-        <ul id="cart-items">
-            <!-- 已加入購物車的商品會顯示在這裡 -->
-        </ul>
-        <button id="checkout-btn">結帳</button>
-    </div>
-
     <section id="home">
         <h2>發現最可愛的小物</h2>
         <p>在 Mochi Store，你能找到各種療癒系的商品！</p>
@@ -42,101 +26,45 @@
 
     <section id="products">
         <h2>熱門商品</h2>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <p>可愛耳環</p>
-            <button class="add-to-cart">加入購物車</button>
+        <div class="product-container">
+            <div class="product-card">
+                <img src="https://via.placeholder.com/150" alt="Product">
+                <p>可愛耳環</p>
+                <button class="add-to-cart" data-price="100">加入購物車</button>
+            </div>
+            <div class="product-card">
+                <img src="https://via.placeholder.com/150" alt="Product">
+                <p>迷你植物</p>
+                <button class="add-to-cart" data-price="150">加入購物車</button>
+            </div>
+            <div class="product-card">
+                <img src="https://via.placeholder.com/150" alt="Product">
+                <p>療癒系筆記本</p>
+                <button class="add-to-cart" data-price="120">加入購物車</button>
+            </div>
+            <div class="product-card">
+                <img src="https://via.placeholder.com/150" alt="Product">
+                <p>卡通貼紙</p>
+                <button class="add-to-cart" data-price="80">加入購物車</button>
+            </div>
+            <div class="product-card">
+                <img src="https://via.placeholder.com/150" alt="Product">
+                <p>小動物鑰匙圈</p>
+                <button class="add-to-cart" data-price="60">加入購物車</button>
+            </div>
+            <!-- 可以繼續加入更多商品 -->
         </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <p>迷你植物</p>
-            <button class="add-to-cart">加入購物車</button>
+    </section>
+
+    <section id="cart">
+        <h2>購物車</h2>
+        <div id="cart-items">
+            <p>你的購物車是空的。</p>
         </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <p>療癒系筆記本</p>
-            <button class="add-to-cart">加入購物車</button>
+        <div id="total-price">
+            <p>總價: $0</p>
         </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <p>卡通貼紙</p>
-            <button class="add-to-cart">加入購物車</button>
-        </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <p>小動物鑰匙圈</p>
-            <button class="add-to-cart">加入購物車</button>
-        </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <p>毛絨小公仔</p>
-            <button class="add-to-cart">加入購物車</button>
-        </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <p>小熊燈飾</p>
-            <button class="add-to-cart">加入購物車</button>
-        </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <p>手工陶瓷擺件</p>
-            <button class="add-to-cart">加入購物車</button>
-        </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <p>動物造型杯子</p>
-            <button class="add-to-cart">加入購物車</button>
-        </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <p>可愛小錢包</p>
-            <button class="add-to-cart">加入購物車</button>
-        </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <p>小兔子手機殼</p>
-            <button class="add-to-cart">加入購物車</button>
-        </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <p>迷你鏡子</p>
-            <button class="add-to-cart">加入購物車</button>
-        </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <p>夢幻手環</p>
-            <button class="add-to-cart">加入購物車</button>
-        </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <p>星空耳環</p>
-            <button class="add-to-cart">加入購物車</button>
-        </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <p>貓咪髮夾</p>
-            <button class="add-to-cart">加入購物車</button>
-        </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <p>可愛便條紙</p>
-            <button class="add-to-cart">加入購物車</button>
-        </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <p>玩具公仔</p>
-            <button class="add-to-cart">加入購物車</button>
-        </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <p>療癒型拼圖</p>
-            <button class="add-to-cart">加入購物車</button>
-        </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <p>迷你桌燈</p>
-            <button class="add-to-cart">加入購物車</button>
-        </div>
+        <button id="checkout">結帳</button>
     </section>
 
     <section id="about">
@@ -151,4 +79,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-   
