@@ -1,5 +1,5 @@
 // 取得本地存儲的購物車
-let cart = JSON.parse(localStorage.getItem("cart")) || []; 
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 // 顯示購物車商品
 function displayCartItems() {
