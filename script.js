@@ -1,40 +1,30 @@
-// 取得本地存儲的購物車
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+// 購物車陣列
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-// 顯示購物車商品並加入修改數量功能
+// 顯示購物車商品
 function displayCartItems() {
-    const cartItemsContainer = document.getElementById("cart-items");
-    cartItemsContainer.innerHTML = ""; // 清空原有內容
+    const cartItemsContainer = document.getElementById('cart-items');
+    cartItemsContainer.innerHTML = '';
 
     if (cart.length === 0) {
-        cartItemsContainer.innerHTML = "<p>你的購物車是空的。</p>";
-    } else {
-        cart.forEach(item => {
-            const itemElement = document.createElement("div");
-            itemElement.classList.add("cart-item");
-            itemElement.innerHTML = `
-                <img src="${item.image}" alt="${item.name}" width="50">
-                <p>${item.name}</p>
-                <p>價格: NT$${item.price}</p>
-                <label>數量: </label>
-                <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
-                <button class="remove-item" onclick="removeItem(${item.id})">移除</button>
-            `;
-            cartItemsContainer.appendChild(itemElement);
-        });
+        cartItemsContainer.innerHTML = '<p>你的購物車是空的。</p>';
+        return;
     }
+
+    cart.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.classList.add('cart-item');
+        itemElement.innerHTML = `
+            <img src="${item.image}" alt="${item.name}" width="50">
+            <p>${item.name}</p>
+            <p>價格: NT$${item.price}</p>
+            <p>數量: ${item.quantity}</p>
+            <button class="remove-item" data-id="${item.id}">移除</button>
+        `;
+        cartItemsContainer.appendChild(itemElement);
+    });
 
     calculateTotalPrice();
-}
-
-// 更新數量
-function updateQuantity(productId, newQuantity) {
-    const item = cart.find(item => item.id === productId);
-    if (item) {
-        item.quantity = parseInt(newQuantity);
-        localStorage.setItem("cart", JSON.stringify(cart)); // 更新本地存儲
-        displayCartItems(); // 重新顯示購物車
-    }
 }
 
 // 計算總金額
@@ -44,85 +34,59 @@ function calculateTotalPrice() {
         totalPrice += item.price * item.quantity;
     });
 
-    document.getElementById("total-price").innerText = `總金額: NT$${totalPrice}`;
-    return totalPrice; // 返回總金額
+    const totalPriceElement = document.getElementById('total-price');
+    if (totalPriceElement) {
+        totalPriceElement.innerText = `總金額: NT$${totalPrice}`;
+    }
 }
 
-// 移除商品
-function removeItem(productId) {
-    cart = cart.filter(item => item.id !== productId);
-    localStorage.setItem("cart", JSON.stringify(cart)); // 更新本地存儲
-    displayCartItems(); // 重新顯示購物車
-}
+// 點擊「加入購物車」按鈕
+document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', function() {
+        const productId = this.getAttribute('data-id');
+        const productPrice = parseInt(this.getAttribute('data-price'));
+        const productName = this.previousElementSibling.previousElementSibling.innerText;
+        const productImage = this.previousElementSibling.src;
 
-// 加入購物車事件處理
-document.getElementById("products").addEventListener("click", function(event) {
-    if (event.target.classList.contains("add-to-cart")) {
-        const productId = event.target.dataset.id;
-        const productName = event.target.closest(".product-card").querySelector("p").innerText;
-        const productPrice = event.target.dataset.price;
-
-        const product = cart.find(item => item.id === productId);
-
-        if (product) {
-            product.quantity += 1; // 如果商品已在購物車，數量+1
-        } else {
-            cart.push({ 
-                id: productId, 
-                name: productName, 
-                price: parseInt(productPrice),
-                quantity: 1 
+        const existingItemIndex = cart.findIndex(item => item.id === productId);
+        if (existingItemIndex === -1) {
+            cart.push({
+                id: productId,
+                name: productName,
+                price: productPrice,
+                image: productImage,
+                quantity: 1
             });
+        } else {
+            cart[existingItemIndex].quantity++;
         }
 
-        localStorage.setItem("cart", JSON.stringify(cart)); // 更新本地存儲
-        displayCartItems(); // 重新顯示購物車
+        localStorage.setItem('cart', JSON.stringify(cart));
+        displayCartItems();
+    });
+});
+
+// 移除商品
+document.getElementById('cart-items').addEventListener('click', function(event) {
+    if (event.target.classList.contains('remove-item')) {
+        const productId = event.target.getAttribute('data-id');
+        cart = cart.filter(item => item.id !== productId);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        displayCartItems();
     }
 });
 
-// 觸發結帳操作
-document.getElementById("checkout-button").addEventListener("click", function() {
+// 結帳
+document.getElementById('checkout-button').addEventListener('click', function() {
     if (cart.length === 0) {
-        alert("購物車為空，無法結帳！");
+        alert('購物車為空，無法結帳！');
         return;
     }
-    // 計算總金額
-    const totalPrice = calculateTotalPrice();
-    // 跳轉到付款頁面並傳遞總金額
-    window.location.href = "payment.html?totalPrice=" + totalPrice;
+    window.location.href = 'thankyou.html';
 });
 
-// 取得 URL 參數
-function getUrlParams() {
-    const params = new URLSearchParams(window.location.search);
-    return {
-        totalPrice: params.get("totalPrice")
-    };
-}
-
-// 顯示總金額
-function displayTotalPrice() {
-    const { totalPrice } = getUrlParams();
-    document.getElementById("total-amount").innerText = `總金額: NT$${totalPrice}`;
-}
-
-// 付款表單提交處理
-document.getElementById("payment-form")?.addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    const name = document.getElementById("name").value;
-    const phone = document.getElementById("phone").value;
-    const store = document.getElementById("store").value;
-    const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
-
-    // 顯示訂單確認訊息
-    alert(`訂單確認：\n姓名：${name}\n電話：${phone}\n門市：${store}\n付款方式：${paymentMethod}\n總金額：NT$${getUrlParams().totalPrice}`);
-
-    // 清空購物車並跳轉至完成頁面
-    localStorage.removeItem("cart");
-    window.location.href = "thankyou.html"; // 跳轉到訂購成功頁面
+// 等 DOM 加載完成後再執行
+document.addEventListener("DOMContentLoaded", function() {
+    // 初始化購物車顯示
+    displayCartItems();
 });
-
-// 初始化頁面
-displayCartItems();
-displayTotalPrice();
