@@ -1,4 +1,4 @@
-// 購物車陣列
+// 確保cart變數只在這裡宣告一次
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 // 顯示購物車商品
@@ -85,8 +85,5 @@ document.getElementById('checkout-button').addEventListener('click', function() 
     window.location.href = 'thankyou.html';
 });
 
-// 等 DOM 加載完成後再執行
-document.addEventListener("DOMContentLoaded", function() {
-    // 初始化購物車顯示
-    displayCartItems();
-});
+// 初始化購物車顯示
+displayCartItems();
