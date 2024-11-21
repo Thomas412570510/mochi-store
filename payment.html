@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mochi Store - 付款</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>付款頁面</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">首頁</a></li>
+                <li><a href="#products">商品</a></li>
+                <li><a href="#about">關於我們</a></li>
+                <li><a href="#cart">購物車</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="payment">
+        <h2>請填寫收件資訊</h2>
+        <form id="payment-form">
+            <label for="name">收件人姓名：</label>
+            <input type="text" id="name" name="name" required><br><br>
+
+            <label for="phone">收件人電話：</label>
+            <input type="tel" id="phone" name="phone" required><br><br>
+
+            <label for="store">7-11門市：</label>
+            <select id="store" name="store" required>
+                <option value="store1">7-11門市1</option>
+                <option value="store2">7-11門市2</option>
+                <option value="store3">7-11門市3</option>
+            </select><br><br>
+
+            <label for="payment-method">付款方式：</label>
+            <input type="radio" id="cash" name="payment-method" value="cash" checked>
+            <label for="cash">貨到付款</label><br><br>
+
+            <p>總金額：$<span id="total-amount"></span></p>
+
+            <button type="submit">確認付款</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>聯絡我們：info@mochistore.com</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
