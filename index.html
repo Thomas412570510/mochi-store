@@ -19,6 +19,22 @@
         </nav>
     </header>
 
+    
+    <!-- 購物車圖示 -->
+    <div id="cart-icon" onclick="toggleCart()">
+        <img src="https://via.placeholder.com/30/000000/FFFFFF/?text=🛒" alt="Cart">
+        <span id="cart-count">0</span> <!-- 顯示購物車內商品數量 -->
+    </div>
+
+    <!-- 購物車內容區域 -->
+    <div id="cart-container" class="cart-container">
+        <h3>購物車</h3>
+        <ul id="cart-items">
+            <!-- 已加入購物車的商品會顯示在這裡 -->
+        </ul>
+        <button id="checkout-btn">結帳</button>
+    </div>
+
     <section id="home">
         <h2>發現最可愛的小物</h2>
         <p>在 Mochi Store，你能找到各種療癒系的商品！</p>
