@@ -37,7 +37,6 @@ function updateQuantity(productId, newQuantity) {
     }
 }
 
-
 // 計算總金額
 function calculateTotalPrice() {
     let totalPrice = 0;
@@ -75,14 +74,9 @@ document.getElementById("products").addEventListener("click", function(event) {
             });
         }
 
-       // 更新：移除購物車商品的函數
-function removeItem(productId) {
-    // 從購物車中移除指定商品
-    cart = cart.filter(item => item.id !== productId);
-    localStorage.setItem("cart", JSON.stringify(cart)); // 更新本地存儲
-    displayCartItems(); // 重新顯示購物車
-}
-
+        localStorage.setItem("cart", JSON.stringify(cart)); // 更新本地存儲
+        displayCartItems(); // 重新顯示購物車
+    }
 });
 
 // 觸發結帳操作
@@ -124,21 +118,9 @@ document.getElementById("payment-form")?.addEventListener("submit", function(eve
     // 清空購物車並跳轉至完成頁面
     localStorage.removeItem("cart");
     window.location.href = "thankyou.html"; // 跳轉到訂購成功頁面
-    // 確認付款，並跳轉到感謝頁面
-document.getElementById("checkout-button")?.addEventListener("click", function() {
-    // 假設您已經完成了結帳邏輯，並準備跳轉
-
-    // 清空購物車並跳轉至完成頁面
-    localStorage.removeItem("cart");
-
-    // 跳轉到感謝頁面
-    window.location.href = "thankyou.html";
 });
-
 
 // 初始化頁面
 displayCartItems();
 displayTotalPrice();
 
-localStorage.setItem("test", "test");
-console.log(localStorage.getItem("test"));
