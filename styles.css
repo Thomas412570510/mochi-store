@@ -7,13 +7,13 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #ffe4e1;
+    background-color: #f9f9f9; /* 淺灰白色 */
     color: #333;
     text-align: center;
 }
 
 header {
-    background-color: #ff69b4;
+    background-color: #f1c6d0; /* 淺粉色 */
     color: white;
     padding: 10px 0;
 }
@@ -40,6 +40,14 @@ section {
     padding: 20px;
 }
 
+#home {
+    background-color: #b6f0e6; /* 淺綠色 */
+}
+
+#products {
+    background-color: #e5f2fd; /* 淺藍色 */
+}
+
 .product-card {
     display: inline-block;
     margin: 10px;
@@ -48,6 +56,8 @@ section {
     border: 1px solid #ddd;
     border-radius: 10px;
     text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
 }
 
 .product-card img {
@@ -57,21 +67,26 @@ section {
     margin-bottom: 10px;
 }
 
+.product-card:hover {
+    transform: scale(1.05);
+}
+
 button.add-to-cart {
-    background-color: #ff69b4;
+    background-color: #f1c6d0; /* 淺粉色 */
     color: white;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
     border-radius: 5px;
+    font-weight: bold;
 }
 
 button.add-to-cart:hover {
-    background-color: #ff1493;
+    background-color: #f8a3b7; /* 更深的粉紅色 */
 }
 
 footer {
-    background-color: #ff69b4;
+    background-color: #f1c6d0; /* 淺粉色 */
     color: white;
     padding: 10px 0;
     position: fixed;
