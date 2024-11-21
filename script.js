@@ -124,6 +124,15 @@ document.getElementById("payment-form")?.addEventListener("submit", function(eve
     // 清空購物車並跳轉至完成頁面
     localStorage.removeItem("cart");
     window.location.href = "thankyou.html"; // 跳轉到訂購成功頁面
+    // 確認付款，並跳轉到感謝頁面
+document.getElementById("checkout-button")?.addEventListener("click", function() {
+    // 假設您已經完成了結帳邏輯，並準備跳轉
+
+    // 清空購物車並跳轉至完成頁面
+    localStorage.removeItem("cart");
+
+    // 跳轉到感謝頁面
+    window.location.href = "thankyou.html";
 });
 
 
