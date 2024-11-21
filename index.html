@@ -1,25 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mochi Mall</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #ffe4e1;
-        }
-        h1 {
-            color: #ff69b4;
-        }
-        p {
-            color: #555;
-        }
-    </style>
+    <title>Mochi Store</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Welcome to Mochi Store </h1>
-    <p>The cutest e-commerce platform for unique and lovely goods!</p>
+    <header>
+        <h1>歡迎來到 Mochi Store</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">首頁</a></li>
+                <li><a href="#products">商品</a></li>
+                <li><a href="#about">關於我們</a></li>
+                <li><a href="#contact">聯絡我們</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home">
+        <h2>發現最可愛的小物</h2>
+        <p>在 Mochi Store，你能找到各種療癒系的商品！</p>
+    </section>
+
+    <section id="products">
+        <h2>熱門商品</h2>
+        <div class="product-card">
+            <img src="https://via.placeholder.com/150" alt="Product">
+            <p>可愛耳環</p>
+            <button class="add-to-cart">加入購物車</button>
+        </div>
+        <div class="product-card">
+            <img src="https://via.placeholder.com/150" alt="Product">
+            <p>迷你植物</p>
+            <button class="add-to-cart">加入購物車</button>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>關於 Mochi Store</h2>
+        <p>我們專賣各種設計精美的可愛風小物，並提供個性化的購物體驗。</p>
+    </section>
+
+    <footer id="contact">
+        <p>聯絡我們：info@mochistore.com</p>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
+</html>
+
 </html>
