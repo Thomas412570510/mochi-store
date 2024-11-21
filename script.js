@@ -1,6 +1,5 @@
 // 取得本地存儲的購物車
-let cart = JSON.parse(localStorage.getItem("cart")) || []; 
-let totalPrice = 0;
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 // 顯示購物車商品
 function displayCartItems() {
@@ -26,24 +25,22 @@ function displayCartItems() {
 
 // 計算總金額
 function calculateTotalPrice() {
-    totalPrice = 0;
+    let totalPrice = 0;
     cart.forEach(item => {
         totalPrice += item.price * item.quantity;
     });
-
     document.getElementById("total-price").innerText = `總金額: $${totalPrice}`;
 }
 
 // 移除商品
 function removeItem(productId) {
-    // 找到並移除商品
     cart = cart.filter(item => item.id !== productId);
     localStorage.setItem("cart", JSON.stringify(cart)); // 更新本地存儲
     displayCartItems(); // 重新顯示購物車
 }
 
 // 觸發結帳操作
-document.getElementById("checkout-button")?.addEventListener("click", function() {
+document.getElementById("checkout-button").addEventListener("click", function() {
     if (cart.length === 0) {
         alert("購物車為空，無法結帳！");
         return;
@@ -56,7 +53,7 @@ document.getElementById("checkout-button")?.addEventListener("click", function()
 function getUrlParams() {
     const params = new URLSearchParams(window.location.search);
     return {
-        totalPrice: params.get("totalPrice") || 0 // 如果沒有參數，設為 0
+        totalPrice: params.get("totalPrice")
     };
 }
 
@@ -83,11 +80,39 @@ document.getElementById("payment-form")?.addEventListener("submit", function(eve
     window.location.href = "thankyou.html"; // 跳轉到完成頁面
 });
 
+// 添加商品到購物車
+function addToCart(productId, name, price, image) {
+    // 檢查商品是否已經在購物車中
+    const existingItem = cart.find(item => item.id === productId);
+    
+    if (existingItem) {
+        // 如果商品已經在購物車中，增加數量
+        existingItem.quantity += 1;
+    } else {
+        // 否則將新商品添加到購物車
+        cart.push({ id: productId, name, price, image, quantity: 1 });
+    }
+
+    // 更新本地存儲
+    localStorage.setItem("cart", JSON.stringify(cart));
+    displayCartItems(); // 更新購物車顯示
+}
+
 // 初始化頁面
 displayCartItems();
 displayTotalPrice();
 
-// 確保結帳按鈕正常
-console.log("Cart:", cart);
-console.log("Total Price:", totalPrice);
+// 監聽加入購物車按鈕
+document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', function() {
+        const productId = button.getAttribute('data-id');
+        const productName = button.getAttribute('data-name');
+        const productPrice = button.getAttribute('data-price');
+        const productImage = button.getAttribute('data-image');
+        
+        // 調用 addToCart 函數將商品加入購物車
+        addToCart(productId, productName, productPrice, productImage);
+    });
+});
+
 
