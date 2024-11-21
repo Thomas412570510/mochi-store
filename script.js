@@ -62,11 +62,11 @@ function getUrlParams() {
 // 顯示總金額
 function displayTotalPrice() {
     const { totalPrice } = getUrlParams();
-    document.getElementById("total-amount").innerText = totalPrice;
+    document.getElementById("total-amount").innerText = `總金額: $${totalPrice}`;
 }
 
 // 付款表單提交處理
-document.getElementById("payment-form").addEventListener("submit", function(event) {
+document.getElementById("payment-form")?.addEventListener("submit", function(event) {
     event.preventDefault();
 
     const name = document.getElementById("name").value;
@@ -82,17 +82,10 @@ document.getElementById("payment-form").addEventListener("submit", function(even
     window.location.href = "thankyou.html"; // 跳轉到完成頁面
 });
 
-// 立即結帳按鈕事件 (從付款頁面過來)
-document.getElementById("checkout-payment-button").addEventListener("click", function() {
-    if (cart.length === 0) {
-        alert("購物車為空，無法結帳！");
-        return;
-    }
-
-    // 跳轉到付款頁面並傳遞總金額
-    window.location.href = "payment.html?totalPrice=" + totalPrice;
-});
-
 // 初始化頁面
 displayCartItems();
 displayTotalPrice();
+
+// 確保結帳按鈕正常
+console.log("Cart:", cart);
+console.log("Total Price:", totalPrice);
