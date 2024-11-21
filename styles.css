@@ -7,13 +7,13 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: ＃F0F8FF; /* 愛麗斯藍 */
+    background-color: #F0F8FF; /* 愛麗斯藍 */
     color: #333;
     text-align: center;
 }
 
 header {
-    background-color: ＃D8BFD8; /* 淺粉色 */
+    background-color: #D8BFD8; /* 淺粉色 */
     color: white;
     padding: 10px 0;
 }
@@ -82,7 +82,7 @@ button.add-to-cart {
 }
 
 button.add-to-cart:hover {
-    background-color: ＃F0F8FF; 
+    background-color: #F0F8FF; /* 愛麗斯藍 */
 }
 
 footer {
