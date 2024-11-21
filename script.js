@@ -18,7 +18,7 @@ function displayCartItems() {
         `;
         cartItemsContainer.appendChild(itemElement);
     });
-    
+
     calculateTotalPrice(); // 更新總金額
 }
 
@@ -34,10 +34,8 @@ function calculateTotalPrice() {
 
 // 觸發結帳操作
 document.getElementById("checkout-button").addEventListener("click", function() {
-    alert(`您已成功結帳，總金額是 $${totalPrice}`);
-    localStorage.removeItem("cart"); // 清空購物車
-    cart = []; // 重置購物車
-    displayCartItems(); // 顯示空購物車
+    // 跳轉到付款頁面並傳遞總金額
+    window.location.href = "payment.html?totalPrice=" + totalPrice;
 });
 
 // 初始化頁面
