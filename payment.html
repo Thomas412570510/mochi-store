@@ -23,10 +23,10 @@
         <h2>請填寫收件資訊</h2>
         <form id="payment-form">
             <label for="name">收件人姓名：</label>
-            <input type="text" id="name" name="name" placeholder="請輸入姓名" required><br><br>
+            <input type="text" id="name" name="name" required><br><br>
 
             <label for="phone">收件人電話：</label>
-            <input type="tel" id="phone" name="phone" placeholder="09xxxxxxxx" required><br><br>
+            <input type="tel" id="phone" name="phone" required><br><br>
 
             <label for="store">門市名稱：</label>
             <input type="text" id="store" name="store" placeholder="請輸入門市名稱" required><br><br>
@@ -37,7 +37,7 @@
 
             <p>總金額：$<span id="total-amount">0</span></p>
 
-            <button type="submit" id="pay-button">確認付款</button>
+            <button type="submit">確認付款</button>
         </form>
     </section>
 
@@ -46,31 +46,35 @@
     </footer>
 
     <script>
-        // 初始化總金額
-        document.addEventListener('DOMContentLoaded', function () {
+        // 當頁面加載時
+        document.addEventListener('DOMContentLoaded', function() {
             const totalAmountElement = document.getElementById('total-amount');
-            const totalAmount = localStorage.getItem('totalAmount') || 0; // 假設從購物車傳遞數據
-            totalAmountElement.textContent = totalAmount;
+            const totalAmount = localStorage.getItem('totalAmount'); // 從 localStorage 獲取總金額
 
-            const payButton = document.getElementById('pay-button');
+            // 顯示總金額
+            if (totalAmount) {
+                totalAmountElement.textContent = totalAmount;
+            } else {
+                totalAmountElement.textContent = '0'; // 預設顯示 0
+            }
+
+            // 處理付款表單提交事件
             const paymentForm = document.getElementById('payment-form');
+            paymentForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // 阻止表單默認提交
 
-            // 表單提交邏輯
-            paymentForm.addEventListener('submit', function (event) {
-                event.preventDefault(); // 阻止默認提交行為
-
-                // 驗證基本欄位
+                // 確認是否填寫所有必要資訊
                 const name = document.getElementById('name').value.trim();
                 const phone = document.getElementById('phone').value.trim();
                 const store = document.getElementById('store').value.trim();
 
                 if (!name || !phone || !store) {
-                    alert('請填寫完整的收件資訊！');
+                    alert('請填寫所有必要資訊！');
                     return;
                 }
 
-                // 模擬付款成功，跳轉到完成頁面
-                alert('付款成功！即將跳轉到完成頁面...');
+                // 成功後跳轉到完成頁面
+                alert('付款成功！');
                 window.location.href = 'thankyou.html';
             });
         });
