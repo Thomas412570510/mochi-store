@@ -11,10 +11,10 @@
         <h1>付款頁面</h1>
         <nav>
             <ul>
-                <li><a href="#home">首頁</a></li>
-                <li><a href="#products">商品</a></li>
-                <li><a href="#about">關於我們</a></li>
-                <li><a href="#cart">購物車</a></li>
+                <li><a href="index.html">首頁</a></li>
+                <li><a href="products.html">商品</a></li>
+                <li><a href="about.html">關於我們</a></li>
+                <li><a href="cart.html">購物車</a></li>
             </ul>
         </nav>
     </header>
@@ -23,23 +23,21 @@
         <h2>請填寫收件資訊</h2>
         <form id="payment-form">
             <label for="name">收件人姓名：</label>
-            <input type="text" id="name" name="name" required><br><br>
+            <input type="text" id="name" name="name" placeholder="請輸入姓名" required><br><br>
 
             <label for="phone">收件人電話：</label>
-            <input type="tel" id="phone" name="phone" required><br><br>
+            <input type="tel" id="phone" name="phone" placeholder="09xxxxxxxx" required><br><br>
 
-           <!-- 改成讓用戶手打門市名稱 -->
-<label for="store">門市名稱：</label>
-<input type="text" id="store" name="store" placeholder="請輸入門市名稱">
-
+            <label for="store">門市名稱：</label>
+            <input type="text" id="store" name="store" placeholder="請輸入門市名稱" required><br><br>
 
             <label for="payment-method">付款方式：</label>
             <input type="radio" id="cash" name="payment-method" value="cash" checked>
             <label for="cash">貨到付款</label><br><br>
 
-            <p>總金額：$<span id="total-amount"></span></p>
+            <p>總金額：$<span id="total-amount">0</span></p>
 
-            <button type="submit">確認付款</button>
+            <button type="submit" id="pay-button">確認付款</button>
         </form>
     </section>
 
@@ -47,9 +45,35 @@
         <p>聯絡我們：info@mochistore.com</p>
     </footer>
 
-    <script src="script.js"></script>
-    <!-- 結帳頁面 -->
-<button id="checkout-button">結帳</button>
-    
+    <script>
+        // 初始化總金額
+        document.addEventListener('DOMContentLoaded', function () {
+            const totalAmountElement = document.getElementById('total-amount');
+            const totalAmount = localStorage.getItem('totalAmount') || 0; // 假設從購物車傳遞數據
+            totalAmountElement.textContent = totalAmount;
+
+            const payButton = document.getElementById('pay-button');
+            const paymentForm = document.getElementById('payment-form');
+
+            // 表單提交邏輯
+            paymentForm.addEventListener('submit', function (event) {
+                event.preventDefault(); // 阻止默認提交行為
+
+                // 驗證基本欄位
+                const name = document.getElementById('name').value.trim();
+                const phone = document.getElementById('phone').value.trim();
+                const store = document.getElementById('store').value.trim();
+
+                if (!name || !phone || !store) {
+                    alert('請填寫完整的收件資訊！');
+                    return;
+                }
+
+                // 模擬付款成功，跳轉到完成頁面
+                alert('付款成功！即將跳轉到完成頁面...');
+                window.location.href = 'thankyou.html';
+            });
+        });
+    </script>
 </body>
 </html>
