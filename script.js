@@ -82,7 +82,7 @@ document.getElementById('checkout-button').addEventListener('click', function() 
         alert('購物車為空，無法結帳！');
         return;
     }
-    window.location.href = 'thankyou.html';
+    window.location.href = 'payment.html';
 });
 
 // 初始化購物車顯示
