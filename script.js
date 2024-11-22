@@ -76,12 +76,20 @@ document.getElementById('cart-items').addEventListener('click', function(event) 
     }
 });
 
-// 結帳
+// 點擊「結帳」按鈕的行為
 document.getElementById('checkout-button').addEventListener('click', function() {
     if (cart.length === 0) {
         alert('購物車為空，無法結帳！');
         return;
     }
+
+    // 計算總金額
+    const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+
+    // 將總金額存入 localStorage
+    localStorage.setItem('totalAmount', totalPrice);
+
+    // 跳轉到付款頁面
     window.location.href = 'payment.html';
 });
 
