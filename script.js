@@ -1,6 +1,27 @@
 // 確保cart變數只在這裡宣告一次
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+// 設定倒數計時的時間（例如：1 小時 30 分鐘）
+const countdownEndTime = new Date().getTime() + 90 * 60 * 1000; // 90 分鐘後
+
+function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = countdownEndTime - now;
+
+    if (distance <= 0) {
+        document.getElementById('timer').innerText = "折扣結束!";
+        clearInterval(countdownInterval);
+    } else {
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById('timer').innerText = `${hours}時 ${minutes}分 ${seconds}秒`;
+    }
+}
+
+const countdownInterval = setInterval(updateCountdown, 1000); // 每秒更新一次
+
 // 顯示購物車商品
 function displayCartItems() {
     const cartItemsContainer = document.getElementById('cart-items');
