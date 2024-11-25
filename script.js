@@ -110,27 +110,19 @@ document.getElementById('checkout-button').addEventListener('click', function() 
     // 將總金額存入 localStorage
     localStorage.setItem('totalAmount', totalPrice);
 
+    // 假裝 Email 確認
+    const email = prompt('請輸入你的 Email：');
+    if (email) {
+        alert(`訂單確認 Email 已發送至 ${email}`);
+    }
+
+    cart = [];
+    localStorage.setItem('cart', JSON.stringify(cart));
+    displayCartItems();
+
     // 跳轉到付款頁面
     window.location.href = 'payment.html';
-});
-document.getElementById('payment-form').addEventListener('submit', function (event) {
-    event.preventDefault();
     
-    // 假設已經提交訂單
-    alert("訂單已完成，系統將發送訂單確認 Email。");
-
-    // 模擬訂單確認 Email
-    const emailContent = `
-        發送至：customer@example.com
-        主題：訂單確認 - Mochi Store
-        內容：
-        您好，感謝您的訂單！
-        訂單編號：123456
-        商品名稱：巧克力麻糬、草莓麻糬
-        總金額：NT$500
-        我們會盡快處理您的訂單。
-    `;
-    console.log(emailContent); // 模擬發送 email
 });
 
 
