@@ -56,4 +56,3 @@ sendOrderEmail(orderDetails, (error, response) => {
   }
 });
 
-});
