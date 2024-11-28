@@ -63,11 +63,12 @@
     </footer>
 
    <script>
-        // 當頁面加載時
         document.addEventListener('DOMContentLoaded', function() {
             const totalAmountElement = document.getElementById('total-amount');
             const totalAmount = localStorage.getItem('totalAmount'); // 從 localStorage 獲取總金額
-
+const paymentMethods = document.querySelectorAll('input[name="payment-method"]');
+            const creditCardInfo = document.getElementById('credit-card-info');
+          
             // 顯示總金額
             if (totalAmount) {
                 totalAmountElement.textContent = totalAmount;
@@ -75,13 +76,9 @@
                 totalAmountElement.textContent = '0'; // 預設顯示 0
             }
             // 監聽付款方式變化
-            paymentMethods.forEach(method => {
+             paymentMethods.forEach(method => {
                 method.addEventListener('change', function () {
-                    if (this.value === 'credit-card') {
-                        creditCardInfo.style.display = 'block';
-                    } else {
-                        creditCardInfo.style.display = 'none';
-                    }
+                    creditCardInfo.style.display = this.value === 'credit-card' ? 'block' : 'none';
                 });
             });
 
@@ -130,9 +127,14 @@
                     感謝您的訂購！我們將盡快為您處理。
                 `;
 
-                orderDetails.forEach((item, index) => {
-                    emailContent += `\n${index + 1}. ${item.name} - 數量：${item.quantity}`;
-                });
+                if (orderDetails.length > 0) {
+                    orderDetails.forEach((item, index) => {
+                        emailContent += `\n${index + 1}. ${item.name} - 數量：${item.quantity} - 單價：$${item.price}`;
+                    });
+                } else {
+                    emailContent += '\n沒有商品資訊';
+                }
+                
 
                 alert(`付款成功！\n\n模擬訂單確認 Email 發送內容：\n${emailContent}`);
                 console.log(emailContent); // 顯示在開發者工具的 Console 中
