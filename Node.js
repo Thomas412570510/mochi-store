@@ -9,8 +9,8 @@ app.use(bodyParser.json());
 const transporter = nodemailer.createTransport({
     service: 'Gmail', // 或其他郵件服務供應商
     auth: {
-        user: 'your-email@gmail.com',
-        pass: 'your-email-password'
+        user: 'rachel05140516@gmail.com',
+        pass: 'ehoi tqzn getr tyea'
     }
 });
 
@@ -19,7 +19,7 @@ app.post('/send-email', (req, res) => {
     const { customerEmail, orderDetails, totalPrice } = req.body;
 
     const mailOptions = {
-        from: 'your-email@gmail.com',
+        from: 'rachel05140516@gmail.com',
         to: customerEmail,
         subject: '訂單確認 - Mochi Store',
         text: `
