@@ -1,10 +1,10 @@
 #countdown-timer {
-    background-color: #ffeb3b; /* 明亮的黃色背景 */
-    color: #d32f2f; /* 顯眼的紅色文字 */
-    border: 2px solid #d32f2f; /* 紅色邊框 */
+    background-color: #FFFACD; /* 明亮的黃色背景 */
+    color: ＃FFC0CB; /* 顯眼的紅色文字 */
+    border: 2px solid ＃FFC0CB; /* 紅色邊框 */
     padding: 20px;
     text-align: center;
-    font-size: 1.5rem; /* 加大文字 */
+    font-size: 1rem; 
     font-weight: bold;
     border-radius: 10px;
     margin: 20px auto;
@@ -12,7 +12,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 #timer {
-    font-size: 2rem; /* 倒數數字更大 */
+    font-size: 1.5rem; /* 倒數數字更大 */
     font-weight: bold;
 }
 #promotions {
