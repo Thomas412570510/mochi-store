@@ -236,6 +236,26 @@
 
         calculateTotalPrice();
     }
+     // 增減數量事件
+                    itemElement.querySelector('.increase').addEventListener('click', function() {
+                        item.quantity++;
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        updateCartDisplay(); // 更新顯示
+                    });
+
+                    itemElement.querySelector('.decrease').addEventListener('click', function() {
+                        if (item.quantity > 1) {
+                            item.quantity--;
+                            localStorage.setItem('cart', JSON.stringify(cart));
+                            updateCartDisplay(); // 更新顯示
+                        }
+                    });
+
+                    cartItemsElement.appendChild(itemElement);
+
+                    totalAmount += item.price * item.quantity; // 累加總金額
+                });
+
 
     // 計算總金額
     function calculateTotalPrice() {
