@@ -9,6 +9,15 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+// 使用環境變數來保護郵件帳戶密碼
+const transporter = nodemailer.createTransport({
+  service: 'gmail', 
+  auth: {
+    user: process.env.GMAIL_USER, // 使用 Gmail 帳戶的郵件地址
+    pass: process.env.GMAIL_PASS  // 使用生成的應用密碼
+  }
+});
+
 // 發送訂單郵件函數
 function sendOrderEmail(orderDetails, callback) {
   // 郵件內容
