@@ -1,7 +1,9 @@
-// 優惠活動顯示邏輯
 document.addEventListener('DOMContentLoaded', function() {
     const promotionsDiv = document.getElementById('promotions');
     
+    // 確認 promotionsDiv 是否正確選取
+    console.log(promotionsDiv);
+
     // 模擬的優惠活動
     const promotions = [
         { id: 1, title: "滿$500免運費", description: "購滿NT$500，即可享免運優惠！" },
@@ -11,6 +13,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 隨機顯示一個優惠活動
     const randomPromotion = promotions[Math.floor(Math.random() * promotions.length)];
+
+    // 確認隨機選擇的優惠是否正確
+    console.log(randomPromotion);
 
     // 動態顯示優惠活動
     promotionsDiv.innerHTML = `
