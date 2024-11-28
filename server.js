@@ -26,15 +26,14 @@ function sendOrderEmail(orderDetails, callback) {
           `您的商品訂單：\n${orderDetails.items}\n\n` +
           `我們會盡快為您處理訂單，謝謝！`
   };
-
-  // 發送郵件
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return callback(error);
-    }
-    callback(null, info.response);
-  });
-}
+transporter.sendMail(mailOptions, (error, info) => {
+  if (error) {
+    console.error('發送郵件失敗:', error);  // 這裡會輸出錯誤信息
+    return callback(error);
+  }
+  console.log('郵件發送成功:', info.response);  // 輸出發送成功的信息
+  callback(null, info.response);
+});
 
 // 測試發送郵件
 const orderDetails = {
