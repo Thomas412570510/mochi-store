@@ -3,22 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>感謝您的訂購</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>感謝您的訂購 - Mochi Store</title>
 </head>
 <body>
     <header>
-        <h1>感謝您的訂購</h1>
+        <h1>感謝您的訂購！</h1>
     </header>
 
     <section>
-        <p>您的訂單已成功提交，感謝您在 Mochi Store 購物！</p>
-        <p>我們會儘快處理您的訂單並安排配送。</p>
-        <a href="index.html">返回首頁</a>
+        <h2>您的訂單已經成功提交</h2>
+        <p>訂單編號：<span id="order-number">正在生成...</span></p>
+        <p>我們將儘快處理您的訂單。</p>
     </section>
 
     <footer>
         <p>聯絡我們：info@mochistore.com</p>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 假設訂單編號是從後端獲取或本地存儲中取得
+            const orderId = localStorage.getItem('orderId') || '無法取得訂單編號';
+            document.getElementById('order-number').textContent = orderId;
+        });
+    </script>
 </body>
 </html>
