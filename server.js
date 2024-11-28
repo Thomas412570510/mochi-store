@@ -39,7 +39,7 @@ function sendOrderEmail(orderDetails, callback) {
 // 測試發送郵件
 const orderDetails = {
   name: 'Rebecca',
-  email: 'customer-email@example.com',
+  email: 'rachel05140516@gmail.com',
   phone: '0987654321',
   store: 'Mochi Store Taipei',
   paymentMethod: '信用卡',
