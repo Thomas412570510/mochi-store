@@ -74,6 +74,16 @@
             } else {
                 totalAmountElement.textContent = '0'; // 預設顯示 0
             }
+            // 監聽付款方式變化
+            paymentMethods.forEach(method => {
+                method.addEventListener('change', function () {
+                    if (this.value === 'credit-card') {
+                        creditCardInfo.style.display = 'block';
+                    } else {
+                        creditCardInfo.style.display = 'none';
+                    }
+                });
+            });
 
             // 處理付款表單提交事件
             const paymentForm = document.getElementById('payment-form');
