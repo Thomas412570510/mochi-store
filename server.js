@@ -5,7 +5,7 @@ const transporter = nodemailer.createTransport({
   service: 'gmail',  // 使用 Gmail 發送郵件
   auth: {
     user: 'rachel05140516@gmail.com',  // 替換成你的 Gmail 帳戶
-    pass: 'gggx xnwj thxg vssx'    // 這裡是你的 Gmail 密碼
+    pass: 'ehoi tqzn getr tyea'    // 這裡是你的 Gmail 密碼
   }
 });
 
