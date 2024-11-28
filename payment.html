@@ -91,6 +91,17 @@
                     alert('請填寫所有必要資訊！');
                     return;
                 }
+                 // 如果選擇信用卡，檢查信用卡資料
+                if (paymentMethod === 'credit-card') {
+                    const cardNumber = document.getElementById('card-number').value.trim();
+                    const cardExpiry = document.getElementById('card-expiry').value.trim();
+                    const cardCVV = document.getElementById('card-cvv').value.trim();
+
+                    if (!cardNumber || !cardExpiry || !cardCVV) {
+                        alert('請填寫完整的信用卡資訊！');
+                        return;
+                    }
+                }
 
                 // 模擬發送訂單確認 Email
                 const orderDetails = JSON.parse(localStorage.getItem('cart')) || [];
@@ -104,7 +115,9 @@
                     付款方式：${paymentMethod === 'cash' ? '貨到付款' : '信用卡'}
                     總金額：$${totalAmount}
 
-                    訂購商品：
+                    訂購商品：${orderItems}
+
+                    感謝您的訂購！我們將盡快為您處理。
                 `;
 
                 orderDetails.forEach((item, index) => {
