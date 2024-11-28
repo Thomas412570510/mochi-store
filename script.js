@@ -110,11 +110,6 @@ document.getElementById('checkout-button').addEventListener('click', function() 
     // 將總金額存入 localStorage
     localStorage.setItem('totalAmount', totalPrice);
 
-    // 假裝 Email 確認
-    const email = prompt('請輸入你的 Email：');
-    if (email) {
-        alert(`訂單確認 Email 已發送至 ${email}`);
-    }
 
     cart = [];
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -124,6 +119,51 @@ document.getElementById('checkout-button').addEventListener('click', function() 
     window.location.href = 'payment.html';
     
 });
+
+document.getElementById('payment-form').addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    // 從 localStorage 獲取總金額
+    const totalPrice = localStorage.getItem('totalAmount');
+    
+    // 模擬購物車商品資訊
+    const cart = [
+        { name: '巧克力麻糬', quantity: 2 },
+        { name: '草莓麻糬', quantity: 1 }
+    ];
+
+    const orderDetails = cart.map(item => `${item.name} x${item.quantity}`).join(', ');
+
+    // 獲取使用者輸入的 Email
+    const customerEmail = document.getElementById('email').value;
+
+    // 檢查 Email 是否填寫
+    if (!customerEmail) {
+        alert('請填寫 Email 地址！');
+        return;
+    }
+
+    // 呼叫後端 API 發送 Email
+    try {
+        const response = await fetch('http://localhost:3000/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ customerEmail, orderDetails, totalPrice })
+        });
+
+        if (response.ok) {
+            alert('訂單確認 Email 已成功發送！');
+        } else {
+            alert('發送 Email 時發生錯誤，請稍後再試！');
+        }
+    } catch (error) {
+        console.error('發送 Email 發生錯誤：', error);
+        alert('系統錯誤，請稍後再試！');
+    }
+});
+
 
 
 // 初始化購物車顯示
