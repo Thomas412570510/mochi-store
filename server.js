@@ -4,8 +4,8 @@ const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
   service: 'gmail',  // 使用 Gmail 發送郵件
   auth: {
-    user: 'zxc55815@gmail.com',  // 替換成你的 Gmail 帳戶
-    pass: 'cindy931103'    // 這裡是你的 Gmail 密碼
+    user: 'rachel05140516@gmail.com',  // 替換成你的 Gmail 帳戶
+    pass: 'lrbm cujj voag mukz'    // 這裡是你的 Gmail 密碼
   }
 });
 
@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 function sendOrderEmail(orderDetails, callback) {
   // 郵件內容
   const mailOptions = {
-    from: 'zxc55815@gmail.com',  // 發件人
+    from: 'rachel05140516@gmail.com',  // 發件人
     to: orderDetails.email,        // 收件人（顧客的電子郵件）
     subject: 'Mochi Store 訂單確認',  // 郵件主題
     text: `親愛的 ${orderDetails.name} 您好！\n\n感謝您的購買！以下是您的訂單詳細資料：\n\n` + 
