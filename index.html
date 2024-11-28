@@ -221,21 +221,22 @@
             return;
         }
 
-        cart.forEach(item => {
-            const itemElement = document.createElement('div');
-            itemElement.classList.add('cart-item');
-            itemElement.innerHTML = `
-                <img src="${item.image}" alt="${item.name}" width="50">
-                <p>${item.name}</p>
-                <p>價格: NT$${item.price}</p>
-                <p>數量: ${item.quantity}</p>
-                <button class="remove-item" data-id="${item.id}">移除</button>
-            `;
-            cartItemsContainer.appendChild(itemElement);
-        });
+       cart.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.classList.add('cart-item');
+        itemElement.innerHTML = `
+            <img src="${item.image}" alt="${item.name}" width="50">
+            <p>${item.name}</p>
+            <p>價格: NT$${item.price}</p>
+            <div>
+                <button class="decrease" data-id="${item.id}">-</button>
+                <span>數量: ${item.quantity}</span>
+                <button class="increase" data-id="${item.id}">+</button>
+            </div>
+            <button class="remove-item" data-id="${item.id}">移除</button>
+        `;
+        cartItemsContainer.appendChild(itemElement);
 
-        calculateTotalPrice();
-    }
      // 增減數量事件
                     itemElement.querySelector('.increase').addEventListener('click', function() {
                         item.quantity++;
