@@ -1,49 +1,59 @@
-const express = require('express');
-const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 
-const app = express();
-const PORT = 3000;
-
-// 中間件解析 JSON 和 URL-encoded 請求
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// 訂單寄送路由
-app.post('/checkout', async (req, res) => {
-    const { email, orderDetails } = req.body;
-
-    // 設置 Nodemailer 傳輸器
-    const transporter = nodemailer.createTransport({
-        service: 'Gmail', // 或其他 SMTP 服務，如 Outlook、Yahoo
-        auth: {
-            user: 'your-email@gmail.com', // 替換為你的郵件
-            pass: 'your-email-password', // 替換為你的郵件密碼或應用專用密碼
-        },
-    });
-
-    // 構建郵件內容
-    const mailOptions = {
-        from: 'your-email@gmail.com', // 寄件者
-        to: email, // 收件者
-        subject: '您的訂單資訊',
-        html: `
-            <h2>感謝您的訂購！</h2>
-            <p>以下是您的訂單細節：</p>
-            <pre>${orderDetails}</pre>
-        `,
-    };
-
-    try {
-        await transporter.sendMail(mailOptions);
-        res.status(200).json({ message: '訂單已寄出！' });
-    } catch (error) {
-        console.error('郵件發送失敗：', error);
-        res.status(500).json({ message: '郵件發送失敗！', error });
-    }
+// 創建郵件傳輸器
+const transporter = nodemailer.createTransport({
+  service: 'gmail',  // 使用 Gmail 發送郵件
+  auth: {
+    user: 'your-email@gmail.com',  // 替換成你的 Gmail 帳戶
+    pass: 'your-email-password'    // 這裡是你的 Gmail 密碼
+  }
 });
 
-// 啟動伺服器
-app.listen(PORT, () => {
-    console.log(`伺服器運行於 http://localhost:${PORT}`);
+// 發送訂單郵件函數
+function sendOrderEmail(orderDetails, callback) {
+  // 郵件內容
+  const mailOptions = {
+    from: 'your-email@gmail.com',  // 發件人
+    to: orderDetails.email,        // 收件人（顧客的電子郵件）
+    subject: 'Mochi Store 訂單確認',  // 郵件主題
+    text: `親愛的 ${orderDetails.name} 您好！\n\n感謝您的購買！以下是您的訂單詳細資料：\n\n` + 
+          `訂單編號：${orderDetails.orderId}\n` +
+          `收件人姓名：${orderDetails.name}\n` +
+          `收件人電話：${orderDetails.phone}\n` +
+          `門市名稱：${orderDetails.store}\n` +
+          `付款方式：${orderDetails.paymentMethod}\n` +
+          `總金額：$${orderDetails.totalAmount}\n\n` +
+          `您的商品訂單：\n${orderDetails.items}\n\n` +
+          `我們會盡快為您處理訂單，謝謝！`
+  };
+
+  // 發送郵件
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return callback(error);
+    }
+    callback(null, info.response);
+  });
+}
+
+// 測試發送郵件
+const orderDetails = {
+  name: 'Rebecca',
+  email: 'customer-email@example.com',
+  phone: '0987654321',
+  store: 'Mochi Store Taipei',
+  paymentMethod: '信用卡',
+  totalAmount: '999',
+  orderId: 'ORD123456789',
+  items: '商品1 - 數量：2 - 單價：$500\n商品2 - 數量：1 - 單價：$499'
+};
+
+sendOrderEmail(orderDetails, (error, response) => {
+  if (error) {
+    console.log('發送郵件失敗:', error);
+  } else {
+    console.log('郵件發送成功:', response);
+  }
+});
+
 });
