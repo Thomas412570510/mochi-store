@@ -22,6 +22,7 @@ function updateCountdown() {
 
 const countdownInterval = setInterval(updateCountdown, 1000); // 每秒更新一次
 
+
 // 顯示購物車商品
 function displayCartItems() {
     const cartItemsContainer = document.getElementById('cart-items');
@@ -47,7 +48,51 @@ function displayCartItems() {
 
     calculateTotalPrice();
 }
+// 優惠活動的資料
+const currentPromotions = [
+    {
+        name: "滿額免運",
+        description: "滿 NT$1000 免運費",
+        condition: 1000, // 設定滿額條件為1000元
+        active: true // 活動是否啟用
+    },
+    {
+        name: "滿額贈品",
+        description: "購物滿 NT$1500 贈送免費小禮物",
+        condition: 1500,
+        active: true
+    }
+];
 
+// 顯示優惠活動
+function displayPromotions() {
+    const cartTotal = calculateCartTotal(); // 取得購物車總金額
+    const promotionsContainer = document.getElementById('promotions');
+
+    // 清空現有內容
+    promotionsContainer.innerHTML = '';
+
+    currentPromotions.forEach(promotion => {
+        if (promotion.active) {
+            const promotionElement = document.createElement('div');
+            promotionElement.classList.add('promotion');
+            
+            // 顯示滿額免運或滿額贈品活動
+            if (cartTotal >= promotion.condition) {
+                promotionElement.innerHTML = `
+                    <p>${promotion.name} - ${promotion.description}</p>
+                    <p>您已滿足條件！</p>
+                `;
+            } else {
+                promotionElement.innerHTML = `
+                    <p>${promotion.name} - ${promotion.description}</p>
+                    <p>再加購 NT$${promotion.condition - cartTotal} 即可享受此優惠！</p>
+                `;
+            }
+            promotionsContainer.appendChild(promotionElement);
+        }
+    });
+}
 // 計算總金額
 function calculateTotalPrice() {
     let totalPrice = 0;
@@ -60,7 +105,10 @@ function calculateTotalPrice() {
         totalPriceElement.innerText = `總金額: NT$${totalPrice}`;
     }
 }
-
+// 頁面加載時顯示優惠活動
+window.addEventListener('DOMContentLoaded', function() {
+    displayPromotions(); // 顯示當前優惠活動
+});
 // 點擊「加入購物車」按鈕
 document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', function() {
