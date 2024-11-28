@@ -131,7 +131,26 @@
             orderDetails.forEach((item, index) => {
                 emailContent += `\n${index + 1}. ${item.name} - 数量：${item.quantity} - 单价：$${item.price}`;
             });
-
+            // 提交数据到后端API发送邮件
+            fetch('http://localhost:3000/send-order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, orderDetails, emailContent })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('付款成功！訂單已發送至您的電子郵件！');
+                    localStorage.removeItem('cart');
+                    localStorage.removeItem('totalAmount');
+                    window.location.href = 'thankyou.html';
+                } else {
+                    alert('發送郵件失敗，請稍後再試。');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('發生錯誤，請稍後再試。');
             console.log("模擬郵件内容：", emailContent);
             alert(`付款成功！\n\n模擬訂單確認郵件已發送：\n${emailContent}`);
 
