@@ -97,7 +97,14 @@
             const phone = document.getElementById('phone').value.trim();
             const store = document.getElementById('store').value.trim();
             const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+            const totalAmount = document.getElementById('total-amount').textContent;
 
+    const orderDetails = JSON.parse(localStorage.getItem('cart')) || [];
+    let items = '';
+    orderDetails.forEach(item => {
+        items += `${item.name} - 數量：${item.quantity} - 單價：$${item.price}\n`;
+    });
+            
             // 验证必填项
             if (!name || !email || !phone || !store) {
                 alert('请填写所有必要信息！');
@@ -118,41 +125,33 @@
                 }
             }
             
-            const orderDetails = JSON.parse(localStorage.getItem('cart')) || [];
-            let emailContent = `
-                收件人姓名：${name}
-                郵件：${email}
-                收件人电话：${phone}
-                門市名稱：${store}
-                付款方式：${paymentMethod === 'cash' ? '货到付款' : '信用卡'}
-                總金额：$${totalAmount}
-            `;
+            const orderData = {
+        name,
+        email,
+        phone,
+        store,
+        paymentMethod: paymentMethod === 'cash' ? '貨到付款' : '信用卡',
+        totalAmount,
+        orderId: 'ORD' + Date.now(),
+        items
+    };
 
-            orderDetails.forEach((item, index) => {
-                emailContent += `\n${index + 1}. ${item.name} - 数量：${item.quantity} - 单价：$${item.price}`;
-            });
-            // 提交数据到后端API发送邮件
-            fetch('http://localhost:3000/send-order', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, orderDetails, emailContent })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('付款成功！訂單已發送至您的電子郵件！');
-                    localStorage.removeItem('cart');
-                    localStorage.removeItem('totalAmount');
-                    window.location.href = 'thankyou.html';
-                } else {
-                    alert('發送郵件失敗，請稍後再試。');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('發生錯誤，請稍後再試。');
-            console.log("模擬郵件内容：", emailContent);
-            alert(`付款成功！\n\n模擬訂單確認郵件已發送：\n${emailContent}`);
+    // 使用 fetch 發送資料到後端
+    fetch('/send-order-email', {  // 假設後端有這個 API 路徑
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(orderData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('訂單確認郵件已發送！');
+    })
+    .catch(error => {
+        console.error('錯誤:', error);
+        alert('發送郵件失敗！');
+    });
 
             // 清空购物车数据
             localStorage.removeItem('cart');
