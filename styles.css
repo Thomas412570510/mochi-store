@@ -1,3 +1,22 @@
+#promotions {
+    margin: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.promotion {
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #e0f7fa;
+    border: 1px solid #00bcd4;
+    border-radius: 5px;
+}
+
+.promotion p {
+    margin: 5px 0;
+}
 /* 重置一些基本樣式 */
 * {
     margin: 0;
