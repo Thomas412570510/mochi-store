@@ -70,11 +70,7 @@ const paymentMethods = document.querySelectorAll('input[name="payment-method"]')
             const creditCardInfo = document.getElementById('credit-card-info');
           
             // 顯示總金額
-            if (totalAmount) {
-                totalAmountElement.textContent = totalAmount;
-            } else {
-                totalAmountElement.textContent = '0'; // 預設顯示 0
-            }
+           totalAmountElement.textContent = totalAmount ? totalAmount : '0';
             // 監聽付款方式變化
              paymentMethods.forEach(method => {
                 method.addEventListener('change', function () {
