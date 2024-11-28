@@ -66,22 +66,33 @@
         document.addEventListener('DOMContentLoaded', function() {
             const totalAmountElement = document.getElementById('total-amount');
             const totalAmount = localStorage.getItem('totalAmount'); // 從 localStorage 獲取總金額
-const paymentMethods = document.querySelectorAll('input[name="payment-method"]');
+            const paymentMethods = document.querySelectorAll('input[name="payment-method"]');
             const creditCardInfo = document.getElementById('credit-card-info');
           
             // 顯示總金額
            totalAmountElement.textContent = totalAmount ? totalAmount : '0';
-            // 監聽付款方式變化
-             paymentMethods.forEach(method => {
-                method.addEventListener('change', function () {
-                    creditCardInfo.style.display = this.value === 'credit-card' ? 'block' : 'none';
-                });
+           // 監聽付款方式變化
+        paymentMethods.forEach(method => {
+            method.addEventListener('change', function () {
+                if (this.value === 'credit-card') {
+                    creditCardInfo.style.display = 'block';
+                } else {
+                    creditCardInfo.style.display = 'none';
+                }
             });
+        });
 
-            // 處理付款表單提交事件
-            const paymentForm = document.getElementById('payment-form');
-            paymentForm.addEventListener('submit', function(event) {
-                event.preventDefault(); // 阻止表單默認提交
+        // 處理付款表單提交事件
+        const paymentForm = document.getElementById('payment-form');
+        if (!paymentForm) {
+            console.error("無法找到表單元素，請確認表單的 ID 是否為 'payment-form'");
+            return;
+        }
+
+        paymentForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            console.log("確認付款提交被觸發");
 
                 // 確認是否填寫所有必要資訊
                 const name = document.getElementById('name').value.trim();
@@ -92,6 +103,7 @@ const paymentMethods = document.querySelectorAll('input[name="payment-method"]')
 
                 if (!name || !email || !phone || !store) {
                     alert('請填寫所有必要資訊！');
+                     console.error("必填欄位缺少值");
                     return;
                 }
                  // 如果選擇信用卡，檢查信用卡資料
@@ -102,11 +114,13 @@ const paymentMethods = document.querySelectorAll('input[name="payment-method"]')
 
                     if (!cardNumber || !cardExpiry || !cardCVV) {
                         alert('請填寫完整的信用卡資訊！');
+                         console.error("信用卡資訊不完整");
                         return;
                     }
                 }
 
                 // 模擬發送訂單確認 Email
+                console.log("正在處理訂單...");
                 const orderDetails = JSON.parse(localStorage.getItem('cart')) || [];
                 const totalAmount = localStorage.getItem('totalAmount') || '0';
 
