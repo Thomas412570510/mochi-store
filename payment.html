@@ -62,16 +62,19 @@
         <p>聯絡我們：info@mochistore.com</p>
     </footer>
 
-   <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const totalAmountElement = document.getElementById('total-amount');
-            const totalAmount = localStorage.getItem('totalAmount'); // 從 localStorage 獲取總金額
-            const paymentMethods = document.querySelectorAll('input[name="payment-method"]');
-            const creditCardInfo = document.getElementById('credit-card-info');
-          
-            // 顯示總金額
-           totalAmountElement.textContent = totalAmount ? totalAmount : '0';
-           // 監聽付款方式變化
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const paymentForm = document.getElementById('payment-form');
+        const totalAmountElement = document.getElementById('total-amount');
+        const totalAmount = localStorage.getItem('totalAmount') || 0;
+
+        // 显示总金额
+        totalAmountElement.textContent = totalAmount;
+
+        const paymentMethods = document.querySelectorAll('input[name="payment-method"]');
+        const creditCardInfo = document.getElementById('credit-card-info');
+
+        // 监听付款方式变化
         paymentMethods.forEach(method => {
             method.addEventListener('change', function () {
                 if (this.value === 'credit-card') {
@@ -82,81 +85,65 @@
             });
         });
 
-        // 處理付款表單提交事件
-        const paymentForm = document.getElementById('payment-form');
-        if (!paymentForm) {
-            console.error("無法找到表單元素，請確認表單的 ID 是否為 'payment-form'");
-            return;
-        }
-
+        // 处理表单提交
         paymentForm.addEventListener('submit', function (event) {
-            event.preventDefault();
+            event.preventDefault(); // 阻止默认提交行为
 
-            console.log("確認付款提交被觸發");
+            console.log("表单提交事件被触发");
 
-                // 確認是否填寫所有必要資訊
-                const name = document.getElementById('name').value.trim();
-                const email = document.getElementById('email').value.trim();
-                const phone = document.getElementById('phone').value.trim();
-                const store = document.getElementById('store').value.trim();
-                const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+            // 获取表单数据
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const store = document.getElementById('store').value.trim();
+            const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
 
-                if (!name || !email || !phone || !store) {
-                    alert('請填寫所有必要資訊！');
-                     console.error("必填欄位缺少值");
+            // 验证必填项
+            if (!name || !email || !phone || !store) {
+                alert('请填写所有必要信息！');
+                console.error("必填信息未填写");
+                return;
+            }
+
+            // 如果选择信用卡，验证信用卡信息
+            if (paymentMethod === 'credit-card') {
+                const cardNumber = document.getElementById('card-number').value.trim();
+                const cardExpiry = document.getElementById('card-expiry').value.trim();
+                const cardCVV = document.getElementById('card-cvv').value.trim();
+
+                if (!cardNumber || !cardExpiry || !cardCVV) {
+                    alert('请填写完整的信用卡信息！');
+                    console.error("信用卡信息不完整");
                     return;
                 }
-                 // 如果選擇信用卡，檢查信用卡資料
-                if (paymentMethod === 'credit-card') {
-                    const cardNumber = document.getElementById('card-number').value.trim();
-                    const cardExpiry = document.getElementById('card-expiry').value.trim();
-                    const cardCVV = document.getElementById('card-cvv').value.trim();
+            }
 
-                    if (!cardNumber || !cardExpiry || !cardCVV) {
-                        alert('請填寫完整的信用卡資訊！');
-                         console.error("信用卡資訊不完整");
-                        return;
-                    }
-                }
+            // 模拟发送订单确认邮件
+            const orderDetails = JSON.parse(localStorage.getItem('cart')) || [];
+            let emailContent = `
+                收件人姓名：${name}
+                邮件：${email}
+                收件人电话：${phone}
+                门市名称：${store}
+                付款方式：${paymentMethod === 'cash' ? '货到付款' : '信用卡'}
+                总金额：$${totalAmount}
 
-                // 模擬發送訂單確認 Email
-                console.log("正在處理訂單...");
-                const orderDetails = JSON.parse(localStorage.getItem('cart')) || [];
-                const totalAmount = localStorage.getItem('totalAmount') || '0';
+                订购商品：
+            `;
 
-                let emailContent = `
-                    收件人姓名：${name}
-                    Email：${email}
-                    收件人電話：${phone}
-                    門市名稱：${store}
-                    付款方式：${paymentMethod === 'cash' ? '貨到付款' : '信用卡'}
-                    總金額：$${totalAmount}
-
-                    訂購商品：${orderItems}
-
-                    感謝您的訂購！我們將盡快為您處理。
-                `;
-
-                if (orderDetails.length > 0) {
-                    orderDetails.forEach((item, index) => {
-                        emailContent += `\n${index + 1}. ${item.name} - 數量：${item.quantity} - 單價：$${item.price}`;
-                    });
-                } else {
-                    emailContent += '\n沒有商品資訊';
-                }
-                
-
-                alert(`付款成功！\n\n模擬訂單確認 Email 發送內容：\n${emailContent}`);
-                console.log(emailContent); // 顯示在開發者工具的 Console 中
-
-                // 清除購物車
-                localStorage.removeItem('cart');
-                localStorage.removeItem('totalAmount');
-
-                // 跳轉到感謝頁面
-                window.location.href = 'thankyou.html';
+            orderDetails.forEach((item, index) => {
+                emailContent += `\n${index + 1}. ${item.name} - 数量：${item.quantity} - 单价：$${item.price}`;
             });
+
+            console.log("模拟邮件内容：", emailContent);
+            alert(`付款成功！\n\n模拟订单确认邮件已发送：\n${emailContent}`);
+
+            // 清空购物车数据
+            localStorage.removeItem('cart');
+            localStorage.removeItem('totalAmount');
+
+            // 跳转到感谢页面
+            window.location.href = 'thankyou.html';
         });
-    </script>
-</body>
-</html>
+    });
+</script>
