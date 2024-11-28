@@ -139,6 +139,9 @@
             localStorage.removeItem('cart');
             localStorage.removeItem('totalAmount');
 
+            const orderId = 'ORD' + Date.now(); // 使用当前时间戳生成订单号
+            localStorage.setItem('orderId', orderId);
+
             // 跳转到感谢页面
             window.location.href = 'thankyou.html';
         });
