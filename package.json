@@ -1,0 +1,25 @@
+{
+  "name": "mochi-store",
+  "version": "1.0.0",
+  "description": "This is a mochi-store",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rowwwww/mochi-store.git"
+  },
+  "author": "Rebecca",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rowwwww/mochi-store/issues"
+  },
+  "homepage": "https://github.com/Rowwwww/mochi-store#readme",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.21.1",
+    "nodemailer": "^6.9.16",
+    "nodemon": "^3.1.7"
+  }
+}
