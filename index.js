@@ -1,6 +1,8 @@
 const express = require('express');
+const path = require('path');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 
 const app = express();
 app.use(bodyParser.json());
@@ -9,10 +11,20 @@ app.use(bodyParser.json());
 const transporter = nodemailer.createTransport({
     service: 'Gmail', // 或其他郵件服務供應商
     auth: {
-        user: 'zxc55815@gmail.com',
-        pass: 'Cindy931103'
+        user: process.env.EMAIL_USERNAME,
+        pass: process.env.EMAIL_PASSWORD
     }
 });
+
+const staticPath = [
+    "src/templates",
+    "src/lib",
+    "src/asserts"
+]
+
+staticPath.forEach(staticPath => {
+    app.use(express.static(path.join(__dirname, staticPath)));
+})
 
 // 處理發送 Email 的 API
 app.post('/send-email', (req, res) => {
@@ -39,6 +51,10 @@ app.post('/send-email', (req, res) => {
             res.status(200).send('Email 發送成功');
         }
     });
+});
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "src/templates", "index.html"));
 });
 
 // 啟動伺服器
